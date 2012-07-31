@@ -14,10 +14,6 @@ public class DateUtils {
 		return new Date();
 	}
 
-	public static Date getStringToDate(String dateString) throws ParseException {
-		return new SimpleDateFormat().parse(dateString);
-	}
-
 	public static String getDateToString() {
 		return DateUtils.getDateToString(DateUtils.DATE_TIMESTAMP, null);
 	}
@@ -31,9 +27,12 @@ public class DateUtils {
 				.getDate() : date);
 	}
 
-	public static String getDateStringToString(String pattern, String dateString)
+	public static Date getStringToDate(String dateString) throws ParseException {
+		return new SimpleDateFormat().parse(dateString);
+	}
+
+	public static Date getStringToDate(String pattern, String dateString)
 			throws ParseException {
-		return new SimpleDateFormat(pattern).format(DateUtils
-				.getStringToDate(dateString));
+		return new SimpleDateFormat(pattern).parse(dateString);
 	}
 }
