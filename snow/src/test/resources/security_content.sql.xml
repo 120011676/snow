@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+	<sql name="queryContent">
+		select t.* from TF_CONTENT t where t.CHANNEL_ID in
+		(select innerTf.CHANNELID from TF_CHANNEL as innerTf where
+		innerTf.CHANNELID = :channelId or innerTf.UP_CHANNELID = :channelId) order by
+		t.PUBLISH_TIME desc
+	</sql>
+</sqls>

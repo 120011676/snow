@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+
+	<sql name="queryResource">
+		select count(1) from security_resource
+	</sql>
+
+	<sql name="getLoginUserInfo">
+		select re.url from security_resource
+		re,security_authority_resource a_re,security_authority
+		a,security_role_authority r_a,security_role r,security_user_role
+		u_r,security_user u where re.id = a_re.reid and a_re.aid = a.id and
+		a.id = r_a.aid and r_a.rid = r.id and r.id = u_r.rid and u_r.uid =
+		u.id and u.username = :username
+	</sql>
+</sqls>

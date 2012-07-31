@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+	<tlib-version>1.0</tlib-version>
+	<short-name>pageTag</short-name>
+	<uri>http://www.qq120011676.org/pagetag</uri>
+	<tag>
+		<name>pageTag</name>
+		<tag-class>org.qq120011676.snow.tag.PageTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>页面对象</description>
+			<name>pageEntity</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>org.qq120011676.snow.entity.PageEntity</type>
+		</attribute>
+		<attribute>
+			<description>formId</description>
+			<name>formId</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+</taglib>
