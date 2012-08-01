@@ -8,5 +8,6 @@ public class DateUtilsTest {
 
 	@Test
 	public void test() throws ParseException {
+		System.out.println(DateUtils.getDate());
 	}
 }
