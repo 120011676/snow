@@ -1,6 +1,0 @@
-#surefire
-#Wed Aug 01 13:54:12 CST 2012
-maven.surefire.debug=true
-user.dir=E\:\\git\\snow\\snow
-localRepository=D\:\\.m2\\repository
-basedir=E\:\\git\\snow\\snow
