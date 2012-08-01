@@ -15,7 +15,7 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
 		DirtiesContextTestExecutionListener.class })
 @ContextConfiguration(locations = { "/applicationContext.xml" })
-public class BaseTest {
+public class BaseJunit {
 
 	@Before
 	public void start() throws Exception {
@@ -25,10 +25,5 @@ public class BaseTest {
 
 	@After
 	public void after() {
-	}
-	
-	@Test
-	public void test(){
-		
 	}
 }
