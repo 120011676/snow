@@ -19,4 +19,16 @@ public class FileUtilsTest {
 	public void is(){
 		System.out.println(FileUtils.isFileOrFolder("e:\\gits"));
 	}
+	
+	@Test
+	public void in(){
+		String pageTagFileAddr="e:\\gits\\a.txt";
+		System.out.println(pageTagFileAddr.substring(0, pageTagFileAddr
+				.lastIndexOf("\\")));
+		if (FileUtils.isFileOrFolder(pageTagFileAddr.substring(pageTagFileAddr
+				.lastIndexOf("\\")))) {
+			FileUtils.createFolder(pageTagFileAddr.substring(pageTagFileAddr
+					.lastIndexOf("\\")));
+		}
+	}
 }
