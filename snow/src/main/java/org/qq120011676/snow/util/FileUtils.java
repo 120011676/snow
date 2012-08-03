@@ -2,6 +2,7 @@ package org.qq120011676.snow.util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,6 +41,44 @@ public class FileUtils {
 		fileWriter.write(fileContent);
 		fileWriter.flush();
 		fileWriter.close();
+	}
+
+	public static byte[] readerStream(InputStream inputStream)
+			throws IOException {
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		int i = -1;
+		while ((i = inputStream.read()) != -1) {
+			byteArrayOutputStream.write(i);
+		}
+		inputStream.close();
+		byteArrayOutputStream.close();
+		return byteArrayOutputStream.toByteArray();
+	}
+
+	public static String readerString(InputStream inputStream)
+			throws IOException {
+		BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(inputStream));
+		StringBuilder stringBuilder = new StringBuilder();
+		String tempString;
+		while ((tempString = bufferedReader.readLine()) != null) {
+			stringBuilder.append(tempString);
+		}
+		bufferedReader.close();
+		return stringBuilder.toString();
+	}
+
+	public static String readerString(InputStream inputStream, String charset)
+			throws IOException {
+		BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(inputStream, charset));
+		StringBuilder stringBuilder = new StringBuilder();
+		String tempString;
+		while ((tempString = bufferedReader.readLine()) != null) {
+			stringBuilder.append(tempString);
+		}
+		bufferedReader.close();
+		return stringBuilder.toString();
 	}
 
 	public static String fileReader(String pathname) throws IOException {
