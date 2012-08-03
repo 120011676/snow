@@ -9,6 +9,7 @@ import javax.servlet.ServletContextListener;
 
 import org.qq120011676.snow.framework.ProjectInit;
 import org.qq120011676.snow.properties.ProjectProperties;
+import org.qq120011676.snow.tag.PageTag;
 import org.qq120011676.snow.util.FileUtils;
 import org.qq120011676.snow.util.ProjectUtils;
 import org.qq120011676.snow.util.StringUtils;
@@ -30,6 +31,7 @@ public class InitListener extends ProjectInit implements ServletContextListener 
 		this.readMessages(servletContext.getInitParameter("messagesFilePath"));
 		try {
 			super.initFreemarker(ProjectUtils.getProjectClassPath());
+			this.pageTemplate();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -39,6 +41,16 @@ public class InitListener extends ProjectInit implements ServletContextListener 
 			e.printStackTrace();
 		}
 		servletContext.setAttribute("path", servletContext.getContextPath());
+
+	}
+
+	private void pageTemplate() throws IOException {
+		String pageTagFileAddr = ProjectUtils.getProjectClassPath()
+				+ PageTag.PAGE_TAG_FILE_PATH;
+		if (!FileUtils.isFileOrFolder(pageTagFileAddr)) {
+			FileUtils.fileStreamWrite(pageTagFileAddr, this.getClass()
+					.getResourceAsStream("/" + PageTag.PAGE_TAG_FILE_PATH));
+		}
 	}
 
 	private void setFileEncoding(String fileEncoding) {
