@@ -14,4 +14,9 @@ public class FileUtilsTest {
 	public void testDelete(){
 		FileUtils.deleteFileOrFolder("G:\\a\\");
 	}
+	
+	@Test
+	public void is(){
+		System.out.println(FileUtils.isFileOrFolder("e:\\gits"));
+	}
 }

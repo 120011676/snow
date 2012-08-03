@@ -47,12 +47,12 @@ public class InitListener extends ProjectInit implements ServletContextListener 
 	private void pageTemplate() throws IOException {
 		String pageTagFileAddr = ProjectUtils.getProjectClassPath()
 				+ PageTag.PAGE_TAG_FILE_PATH;
-		if (!FileUtils.isFileOrFolder(pageTagFileAddr.substring(pageTagFileAddr
+		if (FileUtils.isFileOrFolder(pageTagFileAddr.substring(pageTagFileAddr
 				.lastIndexOf("\\")))) {
 			FileUtils.createFolder(pageTagFileAddr.substring(pageTagFileAddr
 					.lastIndexOf("\\")));
 		}
-		if (!FileUtils.isFileOrFolder(pageTagFileAddr)) {
+		if (FileUtils.isFileOrFolder(pageTagFileAddr)) {
 			FileUtils.fileStreamWrite(pageTagFileAddr, this.getClass()
 					.getResourceAsStream("/" + PageTag.PAGE_TAG_FILE_PATH));
 		}
