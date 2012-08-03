@@ -9,26 +9,26 @@ public class FileUtilsTest {
 		FileUtils.createFolder("G:\\a\\a\\cc\\c.txt");
 		System.out.println(FileUtils.isFileOrFolder("G:\\a\\a\\cc\\c.txt"));
 	}
-	
+
 	@Test
-	public void testDelete(){
+	public void testDelete() {
 		FileUtils.deleteFileOrFolder("G:\\a\\");
 	}
-	
+
 	@Test
-	public void is(){
+	public void is() {
 		System.out.println(FileUtils.isFileOrFolder("e:\\gits"));
 	}
-	
+
 	@Test
-	public void in(){
-		String pageTagFileAddr="e:\\gits\\a.txt";
-		System.out.println(pageTagFileAddr.substring(0, pageTagFileAddr
-				.lastIndexOf("\\")));
-		if (FileUtils.isFileOrFolder(pageTagFileAddr.substring(pageTagFileAddr
-				.lastIndexOf("\\")))) {
-			FileUtils.createFolder(pageTagFileAddr.substring(pageTagFileAddr
-					.lastIndexOf("\\")));
+	public void in() {
+		String pageTagFileAddr = "E:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\AutoShowManager\\WEB-INF\\classes\\resources\\pageTag.ftl";
+		pageTagFileAddr = pageTagFileAddr.substring(0,
+				pageTagFileAddr.lastIndexOf("\\") + 1);
+		System.out.println(pageTagFileAddr);
+		System.out.println(FileUtils.isFileOrFolder(pageTagFileAddr));
+		if (!FileUtils.isFileOrFolder(pageTagFileAddr)) {
+			FileUtils.createFolder(pageTagFileAddr);
 		}
 	}
 }

@@ -17,7 +17,7 @@ public class PageTag extends TagSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public final static String PAGE_TAG_FILE_PATH = "resources/pageTag.ftl";
+	public final static String PAGE_TAG_FILE_PATH = "pageTag.ftl";
 
 	private PageEntity pageEntity;
 
