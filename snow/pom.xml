@@ -75,7 +75,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>org.qq120011676.snow-0.4 beta7</finalName>
+		<finalName>org.qq120011676.snow-0.5 beta 1</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
