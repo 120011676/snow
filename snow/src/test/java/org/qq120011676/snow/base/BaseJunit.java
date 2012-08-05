@@ -1,10 +1,16 @@
 package org.qq120011676.snow.base;
 
+import java.io.File;
+
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.qq120011676.snow.util.SqlUtils;
 import org.qq120011676.snow.xml.SqlXmlParse;
+import org.qq120011676.snow.xml.sql.SqlFileFilter;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,8 +25,17 @@ public class BaseJunit {
 
 	@Before
 	public void start() throws Exception {
-		SqlXmlParse sqlXmlParse = new SqlXmlParse();
-		sqlXmlParse.sqlXmlParse(ClassLoader.getSystemResource("").getPath());
+		File[] files = new File("E:\\test").listFiles(new SqlFileFilter());
+		if (files != null && files.length >= 0) {
+			for (File file : files) {
+				try {
+					new Thread(new SqlXmlParse(new SAXReader().read(file)
+							.getRootElement())).start();
+				} catch (DocumentException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	@After

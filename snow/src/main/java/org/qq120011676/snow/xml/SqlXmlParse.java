@@ -1,91 +1,82 @@
 package org.qq120011676.snow.xml;
 
-import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import org.dom4j.Element;
+import org.dom4j.tree.DefaultText;
 import org.qq120011676.snow.entity.SqlEntity;
 import org.qq120011676.snow.type.SqlType;
 import org.qq120011676.snow.util.SqlUtils;
-import org.qq120011676.snow.xml.sql.SqlFileFilter;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
-public class SqlXmlParse extends SqlUtils {
+public class SqlXmlParse extends SqlUtils implements Runnable {
 
-	public void sqlXmlParse(String filePath) throws Exception {
-		File[] files = new File(filePath).listFiles(new SqlFileFilter());
-		Map<String, SqlEntity> sqls = null;
-		if (files != null && files.length > 0) {
-			sqls = new HashMap<String, SqlEntity>();
-		}
-		for (int i = 0; i < files.length; i++) {
-			this.iterator(sqls, DocumentBuilderFactory.newInstance()
-					.newDocumentBuilder().parse(files[i]).getDocumentElement());
-		}
-		super.initSqls(sqls);
+	private Element root;
+
+	@Override
+	public void run() {
+		this.dom4jParseSql(root);
 	}
 
-	private Map<String, SqlEntity> iterator(Map<String, SqlEntity> sqls,
-			Element element) throws Exception {
-		NodeList nodelist = element.getChildNodes();
-		for (int i = 0; i < nodelist.getLength(); i++) {
-			Node node = nodelist.item(i);
-			if ("sql".equals(node.getNodeName())) {
-				String name = ((Element) node).getAttribute("name");
-				if (sqls.containsKey(name)) {
-					throw new Exception("this sql name '" + name
+	public SqlXmlParse(Element root) {
+		this.root = root;
+	}
+
+	@SuppressWarnings("rawtypes")
+	private void dom4jParseSql(Element element) {
+		if ("sql".equals(element.getName())) {
+			SqlEntity sqlEntity = new SqlEntity();
+			List list = element.content();
+			StringBuilder sqlStringBuilder = new StringBuilder();
+			Map<String, String> mapParameter = new HashMap<String, String>();
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i) instanceof DefaultText) {
+					sqlStringBuilder.append(((DefaultText) list.get(i))
+							.getText());
+				} else if (list.get(i) instanceof Element) {
+					Element elementParameter = (Element) list.get(i);
+					if ("parameter".equals(elementParameter.getName())) {
+						String parameterName = elementParameter.attributeValue(
+								"name").trim();
+						sqlStringBuilder.append("${").append(parameterName)
+								.append("}");
+						if (mapParameter.containsKey(parameterName)) {
+							throw new RuntimeException(
+									"this sql parameter name '" + parameterName
+											+ "' already exists!");
+						}
+						mapParameter.put(parameterName,
+								elementParameter.getTextTrim());
+					}
+				}
+				sqlStringBuilder.append(" ");
+			}
+			sqlEntity.setSql(SqlUtils.sqlFormat(sqlStringBuilder.toString()));
+			sqlEntity.setParameters(mapParameter);
+			String type = element.attributeValue("type");
+			if ("sql".equals(type)) {
+				sqlEntity.setSqlType(SqlType.SQL);
+			} else if ("hql".equals(type)) {
+				sqlEntity.setSqlType(SqlType.HQL);
+			} else {
+				sqlEntity.setSqlType(SqlType.SQL);
+			}
+			String name = element.attributeValue("name").trim();
+			synchronized (SqlUtils.getSQLMap()) {
+				if (SqlUtils.getSQLMap().containsKey(name)) {
+					throw new RuntimeException("this sql name '" + name
 							+ "' already exists!");
 				}
-				sqls.put(name, this.getSqlText((Element) node));
+				SqlUtils.getSQLMap().put(name, sqlEntity);
 			}
-		}
-		return sqls;
-	}
-
-	private SqlEntity getSqlText(Element element) throws Exception {
-		SqlEntity sqlEntity = new SqlEntity();
-		StringBuilder sql = new StringBuilder(super.sqlFormat(element.getTextContent()));
-		String sqlType = element.getAttribute("type");
-		if ("sql".equals(sqlType)) {
-			sqlEntity.setSqlType(SqlType.SQL);
-		} else if ("hql".equals(sqlType)) {
-			sqlEntity.setSqlType(SqlType.HQL);
-		} else {
-			sqlEntity.setSqlType(SqlType.SQL);
-		}
-		if (element.hasChildNodes()) {
-			NodeList nodeList = element.getChildNodes();
-			Map<String, String> parameters = new HashMap<String, String>();
-			int size = nodeList.getLength();
-			for (int i = 0; i < size; i++) {
-				Node node = nodeList.item(i);
-				if ("parameter".equals(node.getNodeName())) {
-					String parameterName = ((Element) node)
-							.getAttribute("name");
-					String parameterText = super.sqlFormat(node
-							.getTextContent().trim());
-					int index = sql.indexOf(parameterText);
-					if (index == -1) {
-						throw new RuntimeException("this sql parameter name '"
-								+ parameterName + "' not exists!");
-					}
-					sql.replace(index, index + parameterText.length(), " ${"
-							+ parameterName + "} ");
-					if (parameters.containsKey(parameterName)) {
-						throw new RuntimeException("this sql parameter name '"
-								+ parameterName + "' already exists!");
-					}
-					parameters.put(parameterName, parameterText);
-					sqlEntity.setParameters(parameters);
+		} else if ("sqls".equals(element.getName())) {
+			List elements = element.elements();
+			for (Object object : elements) {
+				if (object instanceof Element) {
+					this.dom4jParseSql((Element) object);
 				}
 			}
 		}
-		sqlEntity.setSql(super.sqlFormat(sql.toString()));
-		return sqlEntity;
 	}
-
 }

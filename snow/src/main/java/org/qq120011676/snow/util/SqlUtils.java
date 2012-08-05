@@ -1,5 +1,6 @@
 package org.qq120011676.snow.util;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.qq120011676.snow.entity.SqlEntity;
@@ -7,14 +8,16 @@ import org.qq120011676.snow.properties.ProjectProperties;
 
 public class SqlUtils {
 
-	private static Map<String, SqlEntity> SQLS;
-
-	protected void initSqls(Map<String, SqlEntity> sqls) {
-		SQLS = sqls;
+	private static Map<String, SqlEntity> SQLS = new HashMap<String, SqlEntity>();
+	
+	protected static Map<String, SqlEntity> getSQLMap() {
+		return SqlUtils.SQLS;
 	}
 
 	private static SqlEntity getSqlEntity(String name) {
-		return SQLS.get(name);
+		synchronized (SQLS) {
+			return SQLS.get(name);
+		}
 	}
 
 	public static String getSql(String name) {

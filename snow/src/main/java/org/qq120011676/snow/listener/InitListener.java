@@ -7,6 +7,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 import org.qq120011676.snow.framework.ProjectInit;
 import org.qq120011676.snow.properties.ProjectProperties;
 import org.qq120011676.snow.tag.PageTag;
@@ -14,6 +16,7 @@ import org.qq120011676.snow.util.FileUtils;
 import org.qq120011676.snow.util.ProjectUtils;
 import org.qq120011676.snow.util.StringUtils;
 import org.qq120011676.snow.xml.SqlXmlParse;
+import org.qq120011676.snow.xml.sql.SqlFileFilter;
 
 public class InitListener extends ProjectInit implements ServletContextListener {
 
@@ -35,13 +38,30 @@ public class InitListener extends ProjectInit implements ServletContextListener 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		try {
-			new SqlXmlParse().sqlXmlParse(ProjectUtils.getProjectClassPath());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.initSqlXmlParse();
 		servletContext.setAttribute("path", servletContext.getContextPath());
+	}
 
+	private void initSqlXmlParse() {
+		File[] files = new File(ProjectUtils.getProjectClassPath())
+				.listFiles(new SqlFileFilter());
+		if (files != null && files.length >= 0) {
+			Thread thread = null;
+			for (File file : files) {
+				try {
+					thread = new Thread(new SqlXmlParse(new SAXReader().read(
+							file).getRootElement()));
+					thread.start();
+				} catch (DocumentException e) {
+					e.printStackTrace();
+				}
+			}
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private void pageTemplate() throws IOException {
