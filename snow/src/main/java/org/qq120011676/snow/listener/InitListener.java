@@ -29,6 +29,8 @@ public class InitListener extends ProjectInit implements ServletContextListener 
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 		ServletContext servletContext = servletContextEvent.getServletContext();
 		super.initProjectRealPath(servletContext.getRealPath("/"));
+		super.initProjectClassPath(servletContext.getClassLoader()
+				.getResource("").getPath());
 		this.setFileEncoding(servletContext.getInitParameter("fileEncoding"));
 		this.readConfig(servletContext.getInitParameter("configFilePath"));
 		this.readMessages(servletContext.getInitParameter("messagesFilePath"));

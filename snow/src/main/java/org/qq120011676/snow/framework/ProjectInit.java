@@ -13,10 +13,18 @@ public class ProjectInit {
 		protected void initProjectRealPath(String projectRealPath) {
 			super.initProjectRealPath(projectRealPath);
 		}
+
+		protected void initProjectClassPath(String projectClassPath) {
+			super.initProjectClassPath(projectClassPath);
+		}
 	}
 
 	protected void initProjectRealPath(String projectRealPath) {
 		new ProjectUtilInit().initProjectRealPath(projectRealPath);
+	}
+
+	protected void initProjectClassPath(String projectClassPath) {
+		new ProjectUtilInit().initProjectClassPath(projectClassPath);
 	}
 
 	private class ProjectPropertiesInit extends ProjectProperties {

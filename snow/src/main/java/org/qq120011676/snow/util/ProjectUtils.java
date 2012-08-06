@@ -8,7 +8,10 @@ public class ProjectUtils {
 
 	protected void initProjectRealPath(String projectRealPath) {
 		PROJECT_REAL_PATH = projectRealPath;
-		PROJECT_CLASS_PATH = PROJECT_REAL_PATH + "WEB-INF\\classes\\";
+	}
+
+	protected void initProjectClassPath(String projectClassPath) {
+		PROJECT_CLASS_PATH = projectClassPath;
 	}
 
 	public static String getProjectRealPath() {
