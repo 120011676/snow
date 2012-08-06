@@ -52,14 +52,12 @@ public class InitListener extends ProjectInit implements ServletContextListener 
 					thread = new Thread(new SqlXmlParse(new SAXReader().read(
 							file).getRootElement()));
 					thread.start();
+					thread.join();
 				} catch (DocumentException e) {
 					e.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-			}
-			try {
-				thread.join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
 		}
 	}

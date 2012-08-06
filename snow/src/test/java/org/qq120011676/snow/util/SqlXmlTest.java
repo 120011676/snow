@@ -72,11 +72,11 @@ public class SqlXmlTest extends BaseJunit {
 //
 //	@Test
 //	public void sql() throws DocumentException {
-//		// File[] files = new File("E:\\test").listFiles(new SqlFileFilter());
-//		// SAXReader saxReader = new SAXReader();
-//		// Document document = saxReader.read(files[0]);
-//		// Element root = document.getRootElement();
-//		// this.dom4j(root);
+//		 File[] files = new File("E:\\test").listFiles(new SqlFileFilter());
+//		 SAXReader saxReader = new SAXReader();
+//		 Document document = saxReader.read(files[0]);
+//		 Element root = document.getRootElement();
+//		 this.dom4j(root);
 //
 //		System.out.println(SqlUtils.getSql("queryCategoryDetails"));
 //		Map<String, Object> map = new HashMap<String, Object>();
@@ -84,32 +84,31 @@ public class SqlXmlTest extends BaseJunit {
 //		System.out.println(SqlUtils.getSql("queryCategoryDetails", map));
 //	}
 //
-//	public static void main(String[] args) {
-//		File[] files = new File("E:\\test").listFiles(new SqlFileFilter());
-//		System.out.println(files[files.length-1]);
-//		Thread thread = null;
-//		if (files != null && files.length >= 0) {
-//			for (File file : files) {
-//				try {
-//					thread = new Thread(new SqlXmlParse(new SAXReader().read(
-//							file).getRootElement()));
-//					thread.start();
-//				} catch (DocumentException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		try {
-//			thread.join();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-//		System.out.println(new Date().getTime());
-//		System.out.println(SqlUtils.getSql("getLoginUser"));
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("detailsName", "");
-//		System.out.println(SqlUtils.getSql("queryCategoryDetails", map));
-//	}
+	public static void main(String[] args) {
+		File[] files = new File("E:\\test").listFiles(new SqlFileFilter());
+		System.out.println(files[files.length-1]);
+		Thread thread = null;
+		System.out.println(new Date().getTime());
+		if (files != null && files.length >= 0) {
+			for (File file : files) {
+				try {
+					thread = new Thread(new SqlXmlParse(new SAXReader().read(
+							file).getRootElement()));
+					thread.start();
+					thread.join();
+				} catch (DocumentException e) {
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		System.out.println(new Date().getTime());
+		System.out.println(SqlUtils.getSql("getLoginUser"));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("detailsName", "");
+		System.out.println(SqlUtils.getSql("queryCategoryDetails", map));
+	}
 //
 //	public void dom4j(Element element) {
 //		if ("sql".equals(element.getName())) {

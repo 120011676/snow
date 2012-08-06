@@ -26,15 +26,18 @@ public class BaseJunit {
 	@Before
 	public void start() throws Exception {
 		File[] files = new File("E:\\test").listFiles(new SqlFileFilter());
+		Thread thread = null;
 		if (files != null && files.length >= 0) {
 			for (File file : files) {
 				try {
-					new Thread(new SqlXmlParse(new SAXReader().read(file)
-							.getRootElement())).start();
+					thread = new Thread(new SqlXmlParse(new SAXReader().read(
+							file).getRootElement()));
+					thread.start();
 				} catch (DocumentException e) {
 					e.printStackTrace();
 				}
 			}
+			thread.join();
 		}
 	}
 
