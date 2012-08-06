@@ -33,11 +33,11 @@ public class BaseJunit {
 					thread = new Thread(new SqlXmlParse(new SAXReader().read(
 							file).getRootElement()));
 					thread.start();
+					thread.join();
 				} catch (DocumentException e) {
 					e.printStackTrace();
 				}
 			}
-			thread.join();
 		}
 	}
 
