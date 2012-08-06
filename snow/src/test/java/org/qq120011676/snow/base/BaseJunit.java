@@ -2,7 +2,6 @@ package org.qq120011676.snow.base;
 
 import java.io.File;
 
-import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 import org.junit.After;
 import org.junit.Before;
@@ -23,18 +22,15 @@ public class BaseJunit {
 
 	@Before
 	public void start() throws Exception {
-		File[] files = new File("E:\\test").listFiles(new SqlFileFilter());
+		File[] files = new File(ClassLoader.getSystemResource("").getPath())
+				.listFiles(new SqlFileFilter());
 		Thread thread = null;
 		if (files != null && files.length >= 0) {
 			for (File file : files) {
-				try {
-					thread = new Thread(new SqlXmlParse(new SAXReader().read(
-							file).getRootElement()));
-					thread.start();
-					thread.join();
-				} catch (DocumentException e) {
-					e.printStackTrace();
-				}
+				thread = new Thread(new SqlXmlParse(new SAXReader().read(file)
+						.getRootElement()));
+				thread.start();
+				thread.join();
 			}
 		}
 	}
