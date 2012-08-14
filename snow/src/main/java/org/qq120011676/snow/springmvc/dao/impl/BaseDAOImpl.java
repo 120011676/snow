@@ -124,7 +124,7 @@ public class BaseDAOImpl<T> extends NamedParameterJdbcDaoSupport implements
 			page.setMaxCount(count);
 			page.setMaxPage(count % onePageRows == 0 ? count / onePageRows
 					: count / onePageRows + 1);
-			map.put("nowPage", nowPage);
+			map.put("nowPage", nowPage * onePageRows);
 			map.put("onePageRows", onePageRows);
 			page.setResults(super.getNamedParameterJdbcTemplate().query(
 					sqlPage, map, rowMapper));
