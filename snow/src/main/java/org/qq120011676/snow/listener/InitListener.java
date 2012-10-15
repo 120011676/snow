@@ -2,6 +2,8 @@ package org.qq120011676.snow.listener;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -48,15 +50,20 @@ public class InitListener extends ProjectInit implements ServletContextListener 
 		File[] files = new File(ProjectUtils.getProjectClassPath())
 				.listFiles(new SqlFileFilter());
 		if (files != null && files.length >= 0) {
-			Thread thread = null;
+			List<Thread> threads = new ArrayList<Thread>();
 			for (File file : files) {
 				try {
-					thread = new Thread(new SqlXmlParse(new SAXReader().read(
+					Thread thread = new Thread(new SqlXmlParse(new SAXReader().read(
 							file).getRootElement()));
+					threads.add(thread);
 					thread.start();
-					thread.join();
 				} catch (DocumentException e) {
 					e.printStackTrace();
+				}
+			}
+			for (Thread thread : threads) {
+				try {
+					thread.join();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
