@@ -72,10 +72,15 @@
 			<artifactId>org.dom4j.dom4j</artifactId>
 			<version>1.6.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>org.json</artifactId>
+			<version>chargebee-1.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
-		<finalName>org.qq120011676.snow 0.5.0 beta 4</finalName>
+		<finalName>org.qq120011676.snow-0.0.1</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
