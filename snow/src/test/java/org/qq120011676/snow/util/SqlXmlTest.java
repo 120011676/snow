@@ -12,6 +12,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.dom4j.tree.DefaultText;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.qq120011676.snow.base.BaseJunit;
 import org.qq120011676.snow.entity.SqlEntity;
@@ -23,6 +24,7 @@ import org.qq120011676.snow.xml.sql.SqlFileFilter;
 
 public class SqlXmlTest extends BaseJunit {
 
+	@Ignore
 	@Test
 	public void test() {
 		// SqlXmlParse s = new SqlXmlParse();

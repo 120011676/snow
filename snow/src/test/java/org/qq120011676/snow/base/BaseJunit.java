@@ -4,7 +4,9 @@ import java.io.File;
 
 import org.dom4j.io.SAXReader;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.qq120011676.snow.xml.SqlXmlParse;
 import org.qq120011676.snow.xml.sql.SqlFileFilter;
@@ -20,8 +22,8 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 @ContextConfiguration(locations = { "/applicationContext.xml" })
 public class BaseJunit {
 
-	@Before
-	public void start() throws Exception {
+	@BeforeClass
+	public static void start() throws Exception {
 		File[] files = new File(ClassLoader.getSystemResource("").getPath())
 				.listFiles(new SqlFileFilter());
 		Thread thread = null;
@@ -35,7 +37,7 @@ public class BaseJunit {
 		}
 	}
 
-	@After
-	public void after() {
+	@AfterClass
+	public static void after() {
 	}
 }
