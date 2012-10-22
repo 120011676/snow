@@ -24,13 +24,58 @@ public class ProjectProperties {
 				.setMessagesParameter(CONFIG_MAP.get(name), map);
 	}
 
+	public static int getConfigToInt(String name) {
+		return Integer.parseInt(CONFIG_MAP.get(name));
+	}
+
 	public static int getConfigToInt(String name, Map<String, String> map) {
 		return Integer.parseInt(ProjectProperties.setMessagesParameter(
 				CONFIG_MAP.get(name), map));
 	}
 
+	public static double getConfigToDouble(String name) {
+		return Double.parseDouble(CONFIG_MAP.get(name));
+	}
+
 	public static double getConfigToDouble(String name, Map<String, String> map) {
 		return Double.parseDouble(ProjectProperties.setMessagesParameter(
+				CONFIG_MAP.get(name), map));
+	}
+
+	public static long getConfigToLong(String name) {
+		return Long.parseLong(CONFIG_MAP.get(name));
+	}
+
+	public static long getConfigToLong(String name, Map<String, String> map) {
+		return Long.parseLong(ProjectProperties.setMessagesParameter(
+				CONFIG_MAP.get(name), map));
+	}
+
+	public static float getConfigToFloat(String name) {
+		return Float.parseFloat(CONFIG_MAP.get(name));
+	}
+
+	public static float getConfigToFloat(String name, Map<String, String> map) {
+		return Float.parseFloat(ProjectProperties.setMessagesParameter(
+				CONFIG_MAP.get(name), map));
+	}
+
+	public static boolean getConfigToBoolean(String name) {
+		return Boolean.parseBoolean(CONFIG_MAP.get(name));
+	}
+
+	public static boolean getConfigToBoolean(String name,
+			Map<String, String> map) {
+		return Boolean.parseBoolean(ProjectProperties.setMessagesParameter(
+				CONFIG_MAP.get(name), map));
+	}
+
+	public static short getConfigToShort(String name) {
+		return Short.parseShort(CONFIG_MAP.get(name));
+	}
+
+	public static short getConfigToShort(String name, Map<String, String> map) {
+		return Short.parseShort(ProjectProperties.setMessagesParameter(
 				CONFIG_MAP.get(name), map));
 	}
 
