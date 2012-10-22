@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls>
+    <sql name="hospital.geuHospitalList">
+        select hospital_name,hospital_no,hospital_memo from  hospital_info where hospital_type=1  order by hospital_no
+    </sql>
+    
+    <sql name="hospital.deleteHospitalDb">
+       delete from hospital_info
+    </sql>
+    
+    <sql name="hospital.deleteDbinitdata">
+       delete from initdata
+    </sql>
+    
+    <sql name="hospital.deleteDeparmentInfo">
+       delete from deparment_info
+    </sql>
+    
+      <sql name="hospital.deleteDbDoctorInfo">
+       delete from doctor_info
+    </sql>
+    
+    
+     <sql name="hospital.getDeparmentList">
+        select distinct deptName,specialityName,specialityNo,deptNo,hospitalNo from initdata order by hospitalNo
+    </sql>
+    <sql name="hospital.getDoctorList">
+		select distinct hospitalNo,deptNo,
+			specialityNo,doctorName
+			doctorNo,doctorDegree,
+			doctorDesc
+		 from initdata order by hospitalNo,doctorName
+    </sql>
+    
+    <sql name="hospital.initDoctor">
+           insert into doctor_info (
+           hospitalNo ,deptNo ,specialityNo,
+            doctorName, doctorNo, doctorDegree
+           ,doctorDesc,doctorPic)
+           values(
+           :hospitalNo ,:deptNo,:specialityNo,
+           :doctorName, :doctorNo, :doctorDegree
+           ,:doctorDesc,:doctorPic
+           )
+       </sql>
+       
+    
+       <sql name="hospital.initDeparment">
+           insert into deparment_info (hospitalNo ,deptName, specialityName, deptNo,specialityNo)
+           values(:hospitalNo ,:deptName, :specialityName, :deptNo,:specialityNo)
+       </sql>
+    
+     <sql name="hospital.saveHospitalAllData">
+       insert into initdata
+       (availableRegCount,availableRegNumbers,deptName,
+       deptNameAbbr,deptNo,doctorDegree,
+       doctorDesc,doctorName,doctorNameAbbr,
+       doctorNo,dutyDate,dutyTime,
+       hospitalNo,schedulePrice,scheduleTypeName,
+       scheduleTypeNo,specialityName,specialityNameAbbr,
+       specialityno,
+       workId,getdatatime
+       )
+       VALUES
+       (:availableRegCount,:regNumbers,:deptname,
+       :dnameAb,:deptNo,:degree,
+       :doctorDesc,:doctorName,:doctorNameAbbr,
+       :doctorNo,:dutyDate,:dutyTime,
+       :hospitalNo,:schedulePrice,:scheduleTypeName,
+       :scheduleTypeNo,:specialityName,:specialityNameAbbr,
+       :specialityNo , :work, :getdatatime)
+    </sql>
+    
+     <sql name="hospital.getDepartmentByHospitalNo">
+           select deptNo,deptName,specialityName from deparment_info where 1=1 
+           <parameter name="hospitalId">
+			and hospitalNo=:hospitalId
+		</parameter>
+		 	order by deptNo
+     </sql>
+     
+        <sql name="hospital.getDocListByHosIdAndPartId">
+            select hospitalNo,deptNo,doctorName,doctorNo,doctorDegree from doctor_info where 1=1 
+             <parameter name="hospitalId">
+			and hospitalNo=:hospitalId
+		</parameter>
+		 <parameter name="departmentId">
+			and deptNo=:departmentId
+		</parameter>
+ 			order by doctorName
+     </sql>
+    
+</sqls>
