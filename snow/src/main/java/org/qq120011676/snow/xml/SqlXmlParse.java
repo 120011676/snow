@@ -50,7 +50,6 @@ public class SqlXmlParse extends SqlUtils implements Runnable {
 								elementParameter.getTextTrim());
 					}
 				}
-				sqlStringBuilder.append(" ");
 			}
 			sqlEntity.setSql(SqlUtils.sqlFormat(sqlStringBuilder.toString()));
 			sqlEntity.setParameters(mapParameter);
