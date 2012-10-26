@@ -81,7 +81,7 @@ public abstract class BaseServiceImpl<T, S extends IBaseDAO<T>> implements
 	}
 
 	@Override
-	public PageEntity queryMySqlPage(String sqlName, Map<String, Object> map,
+	public PageEntity<T> queryMySqlPage(String sqlName, Map<String, Object> map,
 			RowMapper<T> rowMapper, int nowPage, int onePageRows) {
 		return this.getBaseDAO().queryMySqlPage(sqlName, map, rowMapper,
 				nowPage, onePageRows);

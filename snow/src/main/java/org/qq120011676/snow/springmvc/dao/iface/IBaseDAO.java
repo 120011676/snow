@@ -47,6 +47,6 @@ public interface IBaseDAO<T> {
 	KeyHolder updateReturnPrimaryKey(String sqlName, String[] columnNames,
 			Map<String, Object> map);
 
-	public PageEntity queryMySqlPage(String sqlName, Map<String, Object> map,
+	public PageEntity<T> queryMySqlPage(String sqlName, Map<String, Object> map,
 			RowMapper<T> rowMapper, int nowPage, int onePageRows);
 }

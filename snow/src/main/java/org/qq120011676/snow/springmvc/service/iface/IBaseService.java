@@ -49,6 +49,6 @@ public interface IBaseService<T> {
 	KeyHolder updateReturnPrimaryKey(String sqlName, String[] columnNames,
 			Map<String, Object> map);
 
-	PageEntity queryMySqlPage(String sqlName, Map<String, Object> map,
+	PageEntity<T> queryMySqlPage(String sqlName, Map<String, Object> map,
 			RowMapper<T> rowMapper, int nowPage, int onePageRows);
 }

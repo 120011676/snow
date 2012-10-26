@@ -19,11 +19,11 @@ public class PageTag extends TagSupport {
 
 	public final static String PAGE_TAG_FILE_PATH = "pageTag.ftl";
 
-	private PageEntity pageEntity;
+	private PageEntity<?> pageEntity;
 
 	private String formId;
 
-	public void setPageEntity(PageEntity pageEntity) {
+	public void setPageEntity(PageEntity<?> pageEntity) {
 		this.pageEntity = pageEntity;
 	}
 

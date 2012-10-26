@@ -2,7 +2,7 @@ package org.qq120011676.snow.entity;
 
 import java.util.List;
 
-public class PageEntity {
+public class PageEntity<T> {
 
 	private int maxCount;
 
@@ -12,7 +12,7 @@ public class PageEntity {
 
 	private int onePageRows;
 
-	private List<?> results;
+	private List<T> results;
 
 	public int getMaxCount() {
 		return this.maxCount;
@@ -46,11 +46,11 @@ public class PageEntity {
 		this.onePageRows = onePageRows;
 	}
 
-	public List<?> getResults() {
+	public List<T> getResults() {
 		return this.results;
 	}
 
-	public void setResults(List<?> paramList) {
+	public void setResults(List<T> paramList) {
 		this.results = paramList;
 	}
 }

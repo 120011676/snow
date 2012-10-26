@@ -103,14 +103,14 @@ public class BaseDAOImpl<T> extends NamedParameterJdbcDaoSupport implements
 	}
 
 	@Override
-	public PageEntity queryMySqlPage(String sqlName, Map<String, Object> map,
+	public PageEntity<T> queryMySqlPage(String sqlName, Map<String, Object> map,
 			RowMapper<T> rowMapper, int nowPage, int onePageRows) {
 		String sql = SqlUtils.getSql(sqlName, map);
 		return this.queryPage(sql, this.getMysqlPageSql(sql), map, rowMapper,
 				nowPage, onePageRows);
 	}
 
-	private PageEntity queryPage(String sql, String sqlPage,
+	private PageEntity<T> queryPage(String sql, String sqlPage,
 			Map<String, Object> map, RowMapper<T> rowMapper, int nowPage,
 			int onePageRows) {
 		StringBuilder stringBuilder = new StringBuilder();
@@ -119,7 +119,7 @@ public class BaseDAOImpl<T> extends NamedParameterJdbcDaoSupport implements
 		stringBuilder.append(") pageCount");
 		int count = super.getNamedParameterJdbcTemplate().queryForInt(
 				stringBuilder.toString(), map);
-		PageEntity page = new PageEntity();
+		PageEntity<T> page = new PageEntity<T>();
 		if (count > 0) {
 			page.setMaxCount(count);
 			page.setMaxPage(count % onePageRows == 0 ? count / onePageRows
