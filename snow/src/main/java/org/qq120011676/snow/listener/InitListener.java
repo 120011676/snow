@@ -2,6 +2,7 @@ package org.qq120011676.snow.listener;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +32,8 @@ public class InitListener extends ProjectInit implements ServletContextListener 
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 		ServletContext servletContext = servletContextEvent.getServletContext();
 		super.initProjectRealPath(servletContext.getRealPath("/"));
-		super.initProjectClassPath(servletContext.getClassLoader()
-				.getResource("").getPath());
+		super.initProjectClassPath(Thread.currentThread()
+				.getContextClassLoader().getResource("").getPath());
 		this.setFileEncoding(servletContext.getInitParameter("fileEncoding"));
 		this.readConfig(servletContext.getInitParameter("configFilePath"));
 		this.readMessages(servletContext.getInitParameter("messagesFilePath"));
@@ -53,8 +54,8 @@ public class InitListener extends ProjectInit implements ServletContextListener 
 			List<Thread> threads = new ArrayList<Thread>();
 			for (File file : files) {
 				try {
-					Thread thread = new Thread(new SqlXmlParse(new SAXReader().read(
-							file).getRootElement()));
+					Thread thread = new Thread(new SqlXmlParse(new SAXReader()
+							.read(file).getRootElement()));
 					threads.add(thread);
 					thread.start();
 				} catch (DocumentException e) {
