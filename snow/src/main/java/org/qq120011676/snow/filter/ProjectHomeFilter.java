@@ -31,7 +31,13 @@ public class ProjectHomeFilter extends ProjectHomeUtils implements Filter {
 			for (int i = 0; i < 3; i++) {
 				index = url.indexOf("/", index + 1);
 			}
-			super.init(url.substring(0, index));
+			String contextPath = servletRequest.getServletContext()
+					.getContextPath();
+			String home = url.substring(0, index);
+			if (url.substring(index).startsWith(contextPath)) {
+				home += contextPath;
+			}
+			super.init(home);
 		}
 		chain.doFilter(servletRequest, response);
 	}
