@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+ xmlns="http://www.w3.org/2001/XMLSchema"
+ targetNamespace="http://www.qq120011676.org/sql"
+ xmlns:tns="http://www.qq120011676.org/sql"
+ elementFormDefault="qualified">
+ <element name="sqls">
+  <complexType>
+   <sequence
+    minOccurs="0"
+    maxOccurs="unbounded">
+    <element name="sql">
+     <complexType mixed="true">
+      <sequence
+       minOccurs="0"
+       maxOccurs="unbounded">
+       <element name="parameter">
+        <complexType mixed="true">
+         <attribute name="name" use="required"/>
+        </complexType>
+       </element>
+      </sequence>
+      <attribute name="name" use="required"/>
+     </complexType>
+    </element>
+   </sequence>
+  </complexType>
+ </element>
+</schema>
