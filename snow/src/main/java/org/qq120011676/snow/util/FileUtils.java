@@ -164,9 +164,10 @@ public class FileUtils {
 			throws IOException {
 		FileOutputStream fileOutputStream = new FileOutputStream(new File(
 				pathname));
-		int i = -1;
-		while ((i = inputStream.read()) != -1) {
-			fileOutputStream.write(i);
+		int temp = -1;
+		byte[] bs = new byte[1024 * 10];
+		while ((temp = inputStream.read(bs)) != -1) {
+			fileOutputStream.write(bs, 0, temp);
 		}
 		fileOutputStream.flush();
 		inputStream.close();
