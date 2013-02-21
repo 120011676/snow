@@ -23,6 +23,8 @@ import org.qq120011676.snow.util.file.IFile;
 
 public class FileUtils {
 
+	private static final int cacheSize = 1024 * 10;
+
 	public static boolean isFileOrFolder(String pathname) {
 		return new File(pathname).exists();
 	}
@@ -46,9 +48,10 @@ public class FileUtils {
 	public static byte[] readerStream(InputStream inputStream)
 			throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		int i = -1;
-		while ((i = inputStream.read()) != -1) {
-			byteArrayOutputStream.write(i);
+		int temp = -1;
+		byte[] bs = new byte[cacheSize];
+		while ((temp = inputStream.read(bs)) != -1) {
+			byteArrayOutputStream.write(bs, 0, temp);
 		}
 		inputStream.close();
 		byteArrayOutputStream.close();
@@ -165,7 +168,7 @@ public class FileUtils {
 		FileOutputStream fileOutputStream = new FileOutputStream(new File(
 				pathname));
 		int temp = -1;
-		byte[] bs = new byte[1024 * 10];
+		byte[] bs = new byte[cacheSize];
 		while ((temp = inputStream.read(bs)) != -1) {
 			fileOutputStream.write(bs, 0, temp);
 		}
