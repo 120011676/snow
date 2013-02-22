@@ -12,7 +12,7 @@ public class PageEntity<T> {
 
 	private int onePageRows;
 
-	private List<T> results;
+	private List<? extends T> results;
 
 	public int getMaxCount() {
 		return this.maxCount;
@@ -46,11 +46,11 @@ public class PageEntity<T> {
 		this.onePageRows = onePageRows;
 	}
 
-	public List<T> getResults() {
+	public List<? extends T> getResults() {
 		return this.results;
 	}
 
-	public void setResults(List<T> paramList) {
+	public void setResults(List<? extends T> paramList) {
 		this.results = paramList;
 	}
 }

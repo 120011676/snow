@@ -24,24 +24,24 @@ public interface IBaseService<T> {
 
 	SqlRowSet queryForRowSet(String sqlName, Map<String, Object> map);
 
-	T queryForObject(String sqlName, Map<String, Object> map,
-			RowMapper<T> rowMapper);
+	<A extends T> A queryForObject(String sqlName, Map<String, Object> map,
+			RowMapper<A> rowMapper);
 
 	long queryForLong(String sqlName, Map<String, Object> map);
 
-	<E> List<E> queryForList(String sqlName, Map<String, Object> map,
-			Class<E> czass);
+	<A extends T> List<A> queryForList(String sqlName, Map<String, Object> map,
+			Class<A> czass);
 
 	List<Map<String, Object>> queryForList(String sqlName,
 			Map<String, Object> map);
 
 	int queryForInt(String sqlName, Map<String, Object> map);
 
-	T query(String sqlName, Map<String, Object> map,
-			ResultSetExtractor<T> resultSetExtractor);
+	<A extends T> A query(String sqlName, Map<String, Object> map,
+			ResultSetExtractor<A> resultSetExtractor);
 
-	List<T> query(String sqlName, Map<String, Object> map,
-			RowMapper<T> rowMapper);
+	<A extends T> List<A> query(String sqlName, Map<String, Object> map,
+			RowMapper<A> rowMapper);
 
 	int updateReturnPrimaryKey(String sqlName, String columnName,
 			Map<String, Object> map);
@@ -49,6 +49,7 @@ public interface IBaseService<T> {
 	KeyHolder updateReturnPrimaryKey(String sqlName, String[] columnNames,
 			Map<String, Object> map);
 
-	PageEntity<T> queryMySqlPage(String sqlName, Map<String, Object> map,
-			RowMapper<T> rowMapper, int nowPage, int onePageRows);
+	<A extends T> PageEntity<A> queryMySqlPage(String sqlName,
+			Map<String, Object> map, RowMapper<A> rowMapper, int nowPage,
+			int onePageRows);
 }

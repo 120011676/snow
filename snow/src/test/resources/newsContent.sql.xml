@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.qq120011676.org/sql"
+    xsi:schemaLocation="http://www.qq120011676.org/sql http://61.188.177.210:8080/sql.xsd" >
+    
+    <sql name="queryNewsContentc">
+        select * from news_content
+    </sql>
+</sqls>

@@ -27,8 +27,8 @@ public abstract class BaseServiceImpl<T, S extends IBaseDAO<T>> implements
 	}
 
 	@Override
-	public T queryForObject(String sqlName, Map<String, Object> map,
-			RowMapper<T> rowMapper) {
+	public <A extends T> A queryForObject(String sqlName,
+			Map<String, Object> map, RowMapper<A> rowMapper) {
 		return this.getBaseDAO().queryForObject(sqlName, map, rowMapper);
 	}
 
@@ -38,8 +38,8 @@ public abstract class BaseServiceImpl<T, S extends IBaseDAO<T>> implements
 	}
 
 	@Override
-	public <E> List<E> queryForList(String sqlName, Map<String, Object> map,
-			Class<E> czass) {
+	public <A extends T> List<A> queryForList(String sqlName,
+			Map<String, Object> map, Class<A> czass) {
 		return this.getBaseDAO().queryForList(sqlName, map, czass);
 	}
 
@@ -55,14 +55,14 @@ public abstract class BaseServiceImpl<T, S extends IBaseDAO<T>> implements
 	}
 
 	@Override
-	public T query(String sqlName, Map<String, Object> map,
-			ResultSetExtractor<T> resultSetExtractor) {
+	public <A extends T> A query(String sqlName, Map<String, Object> map,
+			ResultSetExtractor<A> resultSetExtractor) {
 		return this.getBaseDAO().query(sqlName, map, resultSetExtractor);
 	}
 
 	@Override
-	public List<T> query(String sqlName, Map<String, Object> map,
-			RowMapper<T> rowMapper) {
+	public <A extends T> List<A> query(String sqlName, Map<String, Object> map,
+			RowMapper<A> rowMapper) {
 		return this.getBaseDAO().query(sqlName, map, rowMapper);
 	}
 
@@ -81,8 +81,9 @@ public abstract class BaseServiceImpl<T, S extends IBaseDAO<T>> implements
 	}
 
 	@Override
-	public PageEntity<T> queryMySqlPage(String sqlName, Map<String, Object> map,
-			RowMapper<T> rowMapper, int nowPage, int onePageRows) {
+	public <A extends T> PageEntity<A> queryMySqlPage(String sqlName,
+			Map<String, Object> map, RowMapper<A> rowMapper, int nowPage,
+			int onePageRows) {
 		return this.getBaseDAO().queryMySqlPage(sqlName, map, rowMapper,
 				nowPage, onePageRows);
 	}

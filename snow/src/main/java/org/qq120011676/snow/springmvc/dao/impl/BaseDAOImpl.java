@@ -38,8 +38,8 @@ public class BaseDAOImpl<T> extends NamedParameterJdbcDaoSupport implements
 	}
 
 	@Override
-	public T queryForObject(String sqlName, Map<String, Object> map,
-			RowMapper<T> rowMapper) {
+	public <A extends T> A queryForObject(String sqlName,
+			Map<String, Object> map, RowMapper<A> rowMapper) {
 		return super.getNamedParameterJdbcTemplate().queryForObject(
 				SqlUtils.getSql(sqlName, map), map, rowMapper);
 	}
@@ -51,8 +51,8 @@ public class BaseDAOImpl<T> extends NamedParameterJdbcDaoSupport implements
 	}
 
 	@Override
-	public <E> List<E> queryForList(String sqlName, Map<String, Object> map,
-			Class<E> czass) {
+	public <A extends T> List<A> queryForList(String sqlName,
+			Map<String, Object> map, Class<A> czass) {
 		return super.getNamedParameterJdbcTemplate().queryForList(
 				SqlUtils.getSql(sqlName, map), map, czass);
 	}
@@ -71,15 +71,15 @@ public class BaseDAOImpl<T> extends NamedParameterJdbcDaoSupport implements
 	}
 
 	@Override
-	public T query(String sqlName, Map<String, Object> map,
-			ResultSetExtractor<T> resultSetExtractor) {
+	public <A extends T> A query(String sqlName, Map<String, Object> map,
+			ResultSetExtractor<A> resultSetExtractor) {
 		return super.getNamedParameterJdbcTemplate().query(
 				SqlUtils.getSql(sqlName, map), map, resultSetExtractor);
 	}
 
 	@Override
-	public List<T> query(String sqlName, Map<String, Object> map,
-			RowMapper<T> rowMapper) {
+	public <A extends T> List<A> query(String sqlName, Map<String, Object> map,
+			RowMapper<A> rowMapper) {
 		return super.getNamedParameterJdbcTemplate().query(
 				SqlUtils.getSql(sqlName, map), map, rowMapper);
 	}
@@ -103,15 +103,16 @@ public class BaseDAOImpl<T> extends NamedParameterJdbcDaoSupport implements
 	}
 
 	@Override
-	public PageEntity<T> queryMySqlPage(String sqlName, Map<String, Object> map,
-			RowMapper<T> rowMapper, int nowPage, int onePageRows) {
+	public <A extends T> PageEntity<A> queryMySqlPage(String sqlName,
+			Map<String, Object> map, RowMapper<A> rowMapper, int nowPage,
+			int onePageRows) {
 		String sql = SqlUtils.getSql(sqlName, map);
 		return this.queryPage(sql, this.getMysqlPageSql(sql), map, rowMapper,
 				nowPage, onePageRows);
 	}
 
-	private PageEntity<T> queryPage(String sql, String sqlPage,
-			Map<String, Object> map, RowMapper<T> rowMapper, int nowPage,
+	private <A extends T> PageEntity<A> queryPage(String sql, String sqlPage,
+			Map<String, Object> map, RowMapper<A> rowMapper, int nowPage,
 			int onePageRows) {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("select count(1) from (");
@@ -119,7 +120,7 @@ public class BaseDAOImpl<T> extends NamedParameterJdbcDaoSupport implements
 		stringBuilder.append(") pageCount");
 		int count = super.getNamedParameterJdbcTemplate().queryForInt(
 				stringBuilder.toString(), map);
-		PageEntity<T> page = new PageEntity<T>();
+		PageEntity<A> page = new PageEntity<A>();
 		if (count > 0) {
 			page.setMaxCount(count);
 			page.setMaxPage(count % onePageRows == 0 ? count / onePageRows

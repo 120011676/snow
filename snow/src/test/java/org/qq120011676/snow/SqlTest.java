@@ -9,6 +9,6 @@ public class SqlTest extends BaseJunit {
 	@Test
 	public void sqlTest(){
 		
-		System.out.println(SqlUtils.getSql("hospital.saveHospitalAllData"));
+		System.out.println(SqlUtils.getSql("queryNewsContentc"));
 	}
 }
