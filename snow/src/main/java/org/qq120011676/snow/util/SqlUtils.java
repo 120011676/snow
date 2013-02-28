@@ -9,15 +9,13 @@ import org.qq120011676.snow.properties.ProjectProperties;
 public class SqlUtils {
 
 	private static Map<String, SqlEntity> SQLS = new HashMap<String, SqlEntity>();
-	
+
 	protected static Map<String, SqlEntity> getSQLMap() {
 		return SqlUtils.SQLS;
 	}
 
 	private static SqlEntity getSqlEntity(String name) {
-		synchronized (SQLS) {
-			return SQLS.get(name);
-		}
+		return SQLS.get(name);
 	}
 
 	public static String getSql(String name) {

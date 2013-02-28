@@ -62,13 +62,11 @@ public class SqlXmlParse extends SqlUtils implements Runnable {
 				sqlEntity.setSqlType(SqlType.SQL);
 			}
 			String name = element.attributeValue("name").trim();
-			synchronized (SqlUtils.getSQLMap()) {
-				if (SqlUtils.getSQLMap().containsKey(name)) {
-					throw new RuntimeException("this sql name '" + name
-							+ "' already exists!");
-				}
-				SqlUtils.getSQLMap().put(name, sqlEntity);
+			if (SqlUtils.getSQLMap().containsKey(name)) {
+				throw new RuntimeException("this sql name '" + name
+						+ "' already exists!");
 			}
+			SqlUtils.getSQLMap().put(name, sqlEntity);
 		} else if ("sqls".equals(element.getName())) {
 			List elements = element.elements();
 			for (Object object : elements) {
